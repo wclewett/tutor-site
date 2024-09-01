@@ -1,0 +1,10 @@
+package templates
+
+var classContents = " relative basis-full flex-1 flex-cols flex-wrap inline-flex justify-evenly my-3 py-3"
+
+templ section(location string) {
+  
+  <div class={ location + classContents } >
+    { children... }
+  </div>
+}

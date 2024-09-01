@@ -12,8 +12,8 @@ func NewGetRegisterHandler() *GetRegisterHandler {
 }
 
 func (h *GetRegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	c := templates.RegisterPage()
-	err := templates.Layout(c, "My website").Render(r.Context(), w)
+	c := templates.Register()
+	err := templates.App(c, "Crear").Render(r.Context(), w)
 
 	if err != nil {
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)

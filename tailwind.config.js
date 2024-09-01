@@ -4,6 +4,7 @@ const colors = require('tailwindcss/colors')
 module.exports = {
   content: [
     'internal/templates/*.templ',
+    'static/**/*.{html,js,css}'
   ],
   theme: {
     container: {
@@ -20,6 +21,12 @@ module.exports = {
         primary: colors.blue,
         secondary: colors.yellow,
         neutral: colors.gray,
+      },
+      fontFamily: {
+        merienda: ["Merienda", "cursive"]
+      },
+      backgroundImage: {
+        Almeria: "url(static/images/almeria.png)"
       }
     },
   },

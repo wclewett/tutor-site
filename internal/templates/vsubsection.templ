@@ -1,0 +1,10 @@
+package templates
+var vsubsectionContents = " bg-blend-multiply rounded-xl p-3 m-3 max-w-screen-xl min-w-72"
+templ vsubsection(title string, bg string) {
+  <div class={ bg + subsectionContents }>
+    <div class="text-left font-merienda text-red-700 pl-3">{ title }</div>
+    <div class="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg">
+      { children... }
+    </div>
+  </div>
+}

@@ -1,38 +1,40 @@
 package templates
 
-templ RegisterPage() {
-	<div hx-ext="response-targets">
-		<h1>
-			Register an account
-		</h1>
-		<form
-			hx-post="/register"
-			hx-trigger="submit"
-			hx-target-401="#register-error"
-		>
-			<div id="register-error"></div>
-			<div>
-				<label for="email">Your email</label>
-				<input type="email" name="email" id="email" placeholder="name@company.com" required=""/>
-			</div>
-			<div>
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" placeholder="••••••••" required=""/>
-			</div>
-			<button type="submit">
-				Register
-			</button>
-			<p>
-				Already have an account?
-				<a href="/login">Login</a>
-			</p>
-		</form>
-	</div>
+templ Register() {
+  @section("row-start-1 order-1") {
+    @vsubsection("Crear una cuenta", "bg-stone-100") {
+      <div hx-ext="response-targets">
+        <form hx-post="/register" hx-trigger="submit" hx-target-401="#register-error">
+          @textbox("Correo electrónico") {
+            <div id="register-error"></div>
+            <div>
+              @input("email", "email", "pepe@casa.es")
+            </div>
+          }
+          @textbox("Contraseña") {
+            <div>
+              @input("password", "current-password", "••••••••")
+            </div>
+          }
+          @button("submit") {
+            <p>Acceder</p>
+          }
+        </form>
+      </div>
+      @textbox("¿Ya tienes una cuenta?") {
+        @button("button") { 
+          <a href="/acceder">Acceder a la cuenta</a>
+        }
+      }
+    }
+  }
+  @section("row-start-2 order-2")
+  @section("row-start-3 order-3")
 }
 
 templ RegisterSuccess() {
 	<h1>Registration successful</h1>
-	<p>Go to <a href="login">login</a></p>
+	<p>Go to <a href="/login">login</a></p>
 }
 
 

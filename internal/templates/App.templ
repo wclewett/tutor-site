@@ -1,0 +1,15 @@
+package templates
+
+templ App(page templ.Component, title string) {
+  @head(title)
+  <body class="bg-gray-100">
+    <div class="absolute inset-0 bg-cover bg-center bg-cover bg-no-repeat bg-opacity Almeria">
+
+      <div class="absolute inset-0 grid grid-cols-[4%_92%_4%] grid-rows-[5%_90%_5%] h-screen w-screen backdrop-blur-sm">
+        @navbar()
+        @content() { @page }
+        @footer()
+      </div>
+    </div>
+  </body> 
+}

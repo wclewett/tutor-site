@@ -1,0 +1,10 @@
+package templates
+
+templ button(buttonType string) {
+  <div class="flex justify-center">
+    <div class="bg-amber-200 rounded-xl border-solid border-2 border-red-700 mx-auto shadow-2xl inline-flex text-center">
+      <button type={ buttonType } class="px-4 py-2 font-merienda text-red-600 text-center size-full">{ children... }
+      </button>
+    </div>
+  </div>
+}

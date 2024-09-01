@@ -1,0 +1,11 @@
+package templates
+var subsectionContents = " bg-blend-multiply rounded-xl p-3 m-3 max-w-screen-xl min-w-72 max-h-max"
+templ subsection(title string, bg string) {
+  <div class={ bg + subsectionContents }>
+    <div class="text-left font-merienda text-red-700 pl-3">{ title }</div>
+    <div class="relative basis-full flex-1 flex-rows flex-wrap inline-flex justify-evenly my-3 py-3">
+      { children... }
+    </div>
+  </div>
+}
+
