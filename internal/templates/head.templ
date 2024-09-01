@@ -1,5 +1,5 @@
 package templates
-
+ 
 import (
   "os"
   "goth/internal/middleware"
@@ -15,7 +15,7 @@ templ head(title string) {
 		if os.Getenv("env") == "production" {
 			<link rel="stylesheet" href="static/css/style.min.css" nonce={ middleware.GetTwNonce(ctx) }/>
 		} else {
-			<link rel="stylesheet" href="static/css/output.css" nonce={ middleware.GetTwNonce(ctx) }/>
+	    <link rel="stylesheet" href="static/css/style.css" type="text/css" nonce={ middleware.GetTwNonce(ctx) }/>
 		}
 	</head>
 }

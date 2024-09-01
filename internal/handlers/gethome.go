@@ -15,7 +15,7 @@ func NewHomeHandler() *HomeHandler {
 
 func (h *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
-	// user, ok := r.Context().Value(middleware.UserKey).(*store.User)
+	_, ok := r.Context().Value(middleware.UserKey).(*store.User)
 
 	if !ok {
 		c := templates.Home()

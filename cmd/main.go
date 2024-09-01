@@ -70,24 +70,24 @@ func main() {
 
 		r.Get("/", handlers.NewHomeHandler().ServeHTTP)
 
-		r.Get("/about", handlers.NewAboutHandler().ServeHTTP)
+		// r.Get("/about", handlers.NewAboutHandler().ServeHTTP)
 
-		r.Get("/register", handlers.NewGetRegisterHandler().ServeHTTP)
+		r.Get("/crear", handlers.NewGetRegisterHandler().ServeHTTP)
 
-		r.Post("/register", handlers.NewPostRegisterHandler(handlers.PostRegisterHandlerParams{
+		r.Post("/crear", handlers.NewPostRegisterHandler(handlers.PostRegisterHandlerParams{
 			UserStore: userStore,
 		}).ServeHTTP)
 
-		r.Get("/login", handlers.NewGetLoginHandler().ServeHTTP)
+		r.Get("/acceder", handlers.NewGetLoginHandler().ServeHTTP)
 
-		r.Post("/login", handlers.NewPostLoginHandler(handlers.PostLoginHandlerParams{
+		r.Post("/acceder", handlers.NewPostLoginHandler(handlers.PostLoginHandlerParams{
 			UserStore:         userStore,
 			SessionStore:      sessionStore,
 			PasswordHash:      passwordhash,
 			SessionCookieName: cfg.SessionCookieName,
 		}).ServeHTTP)
 
-		r.Post("/logout", handlers.NewPostLogoutHandler(handlers.PostLogoutHandlerParams{
+		r.Post("/salir", handlers.NewPostLogoutHandler(handlers.PostLogoutHandlerParams{
 			SessionCookieName: cfg.SessionCookieName,
 		}).ServeHTTP)
 	})

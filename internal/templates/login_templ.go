@@ -164,7 +164,7 @@ func Login() templ.Component {
 							}()
 						}
 						ctx = templ.InitializeContext(ctx)
-						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a href=\"/register\">Crear una cuenta</a>")
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a href=\"/crear\">Crear una cuenta</a>")
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
