@@ -30,7 +30,7 @@ func App(page templ.Component, title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body class=\"bg-gray-100\"><div class=\"absolute inset-0 bg-cover bg-center bg-cover bg-no-repeat bg-opacity Almeria\"><div class=\"absolute inset-0 grid grid-cols-[4%_92%_4%] grid-rows-[5%_90%_5%] h-screen w-screen backdrop-blur-sm\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body class=\"bg-cover bg-center bg-cover bg-no-repeat bg-opacity\"><div class=\"absolute inset-0 grid grid-cols-[4%_92%_4%] grid-rows-[5%_90%_5%] h-screen w-screen backdrop-blur-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -64,7 +64,7 @@ func App(page templ.Component, title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

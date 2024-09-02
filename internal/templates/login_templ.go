@@ -192,14 +192,6 @@ func Login() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = section("row-start-2 order-2").Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = section("row-start-3 order-3").Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		return templ_7745c5c3_Err
 	})
 }
@@ -230,4 +222,6 @@ func LoginError() templ.Component {
 	})
 }
 
+// @section("row-start-2 order-2")
+// @section("row-start-3 order-3")
 var _ = templruntime.GeneratedTemplate

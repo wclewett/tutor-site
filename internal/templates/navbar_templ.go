@@ -26,7 +26,7 @@ func navbar() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"absolute inset-0 bg-slate-100 row-start-1 row-span-1 col-start-1 col-span-10 border-b border-zinc-300 flex flex-row\"><div class=\"place-self-center px-2 size-fit\"><button class=\"font-merienda font-medium text-red-700 text-lg px-2 bg-amber-200 rounded\"><a href=\"/\">¡Español con Fabio!</a></button></div><div class=\"place-self-center px-2 size-fit\"><button class=\"font-merienda font-medium text-red-700 text-lg px-2 bg-amber-200 rounded \"><a href=\"/acceder\">Acceder a la cuenta</a></button></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"absolute inset-0 bg-slate-100 row-start-1 row-span-1 col-start-1 col-span-10 border-b border-zinc-300 flex flex-row\"><div class=\"place-self-center px-2 size-fit\"><button class=\"font-merienda font-medium text-red-700 text-lg px-2 rounded\"><a href=\"/\">¡Español con Fabio!</a></button></div><div class=\"place-self-center px-2 size-fit\"><button class=\"font-merienda font-medium text-red-700 text-lg px-2 rounded\"><a href=\"/acceder\">Acceder a la cuenta</a></button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -126,7 +126,7 @@ func Register() templ.Component {
 						}()
 					}
 					ctx = templ.InitializeContext(ctx)
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>Acceder</p>")
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>Crear</p>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -189,14 +189,6 @@ func Register() templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = section("row-start-1 order-1").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = section("row-start-2 order-2").Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = section("row-start-3 order-3").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

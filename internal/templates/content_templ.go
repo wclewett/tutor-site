@@ -26,7 +26,7 @@ func content() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"absolute inset-0 bg-gradient-to-b from-slate-200 to-transparent mt-auto mb-auto grid grid-cols-[4%_92%_4%] items-center justify-center col-start-1 col-span-3 row-start-2 row-span-1 min-h-full\"><div class=\"absolute inset-0 flex flex-rows flex-1 flex-wrap col-start-2 col-span-1 overflow-y-auto\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"absolute inset-0 bg-gradient-to-b from-slate-200 mt-auto mb-auto grid grid-cols-[4%_92%_4%] items-center justify-center col-start-1 col-span-3 row-start-2 row-span-1 min-h-full\"><div class=\"absolute inset-0 flex flex-rows flex-1 flex-wrap col-start-2 col-span-1 overflow-y-auto\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

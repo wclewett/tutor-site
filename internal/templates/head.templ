@@ -15,7 +15,12 @@ templ head(title string) {
 		if os.Getenv("env") == "production" {
 			<link rel="stylesheet" href="static/css/style.min.css" nonce={ middleware.GetTwNonce(ctx) }/>
 		} else {
-	    <link rel="stylesheet" href="static/css/style.css" type="text/css" nonce={ middleware.GetTwNonce(ctx) }/>
+	    <link rel="stylesheet" href="static/css/style.css" nonce={ middleware.GetTwNonce(ctx) }/>
 		}
+    <style nonce={ middleware.GetTwNonce(ctx) }>
+      body { 
+        background-image: url('static/images/almeria.png');
+      }
+    </style>
 	</head>
 }

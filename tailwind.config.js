@@ -3,8 +3,8 @@ const colors = require('tailwindcss/colors')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    'internal/templates/*.templ',
-    'static/**/*.{html,js,css}'
+    './internal/templates/*.templ',
+    './static/**/*.{html,js,css,png}',
   ],
   theme: {
     container: {
@@ -26,7 +26,7 @@ module.exports = {
         merienda: ["Merienda", "cursive"]
       },
       backgroundImage: {
-        Almeria: "url(static/images/almeria.png)"
+        'almeria': "url('../static/images/almeria.png')"
       }
     },
   },
