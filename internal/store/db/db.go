@@ -1,41 +1,31 @@
 package db
 
 import (
-	"goth/internal/store"
-	"os"
+	"database/sql"
+	"encoding/json"
+	"fmt"
+	"goth/internal/aws"
 
-	"gorm.io/driver/sqlite" // Sqlite driver based on CGO
-	// "github.com/glebarez/sqlite" // Pure go SQLite driver, checkout https://github.com/glebarez/sqlite for details
-	"gorm.io/gorm"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
-func open(dbName string) (*gorm.DB, error) {
-
-	// make the temp directory if it doesn't exist
-	err := os.MkdirAll("/tmp", 0755)
-	if err != nil {
-		return nil, err
-	}
-
-	return gorm.Open(sqlite.Open(dbName), &gorm.Config{})
+type tursoConn struct {
+  Url    string
+  Token  string
 }
 
-func MustOpen(dbName string) *gorm.DB {
+func open(dbName string) (*sql.DB, error) {
+  sm, err := aws.GetSMClient("us-east-1")
+  if err != nil { return nil, err }
+  
+  id := "turso"
+  ss, err := sm.GetSecret(&id)
+  
+  conn := &tursoConn{}
+  err = json.Unmarshal([]byte(*ss), conn)
+  if err != nil { return nil, err }
 
-	if dbName == "" {
-		dbName = "goth.db"
-	}
-
-	db, err := open(dbName)
-	if err != nil {
-		panic(err)
-	}
-
-	err = db.AutoMigrate(&store.User{}, &store.Session{})
-
-	if err != nil {
-		panic(err)
-	}
-
-	return db
+  url := fmt.Sprintf("libsql://%s.turso.io?authToken=%s", dbName, conn.Token)
+  db, err := sql.Open("libsql", url)
+  return db, err
 }
