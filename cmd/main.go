@@ -73,19 +73,28 @@ func main() {
 		// r.Get("/about", handlers.NewAboutHandler().ServeHTTP)
 
 		r.Get("/crear", handlers.NewGetRegisterHandler().ServeHTTP)
-
 		r.Post("/crear", handlers.NewPostRegisterHandler(handlers.PostRegisterHandlerParams{
 			UserStore: userStore,
 		}).ServeHTTP)
 
 		r.Get("/acceder", handlers.NewGetLoginHandler().ServeHTTP)
-
 		r.Post("/acceder", handlers.NewPostLoginHandler(handlers.PostLoginHandlerParams{
 			UserStore:         userStore,
 			SessionStore:      sessionStore,
 			PasswordHash:      passwordhash,
 			SessionCookieName: cfg.SessionCookieName,
 		}).ServeHTTP)
+
+    // r.Get("/reservar", handlers.NewGetReserveHandler().ServeHTTP)
+		// r.Post("/reservar", handlers.NewPostReserveHandler(handlers.PostReserveHandlerParams{
+		// 	UserStore:         userStore,
+		// 	SessionStore:      sessionStore,
+		// 	PasswordHash:      passwordhash,
+		// 	SessionCookieName: cfg.SessionCookieName,
+		// }).ServeHTTP)
+
+    r.Get("/iniciodeusario", handlers.NewGetUserHomeHandler().ServeHTTP)
+
 
 		r.Post("/salir", handlers.NewPostLogoutHandler(handlers.PostLogoutHandlerParams{
 			SessionCookieName: cfg.SessionCookieName,
