@@ -1,2 +1,0 @@
-echo 'global' 'CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, email TEXT, hashword TEXT)' | ./shell.sh
-
