@@ -37,15 +37,20 @@ func main() {
 
 	cfg := config.MustLoadConfig()
 
-	db := database.MustOpen(cfg.DatabaseName)
+	db, err := database.MustOpen(cfg.DatabaseName)
+  if err != nil {
+    logger.Error("failed to start rutrow",
+      "Error", err)
+    // return 
+  }
 	passwordhash := passwordhash.NewHPasswordHash()
 
-	userStore := dbstore.NewUserStore(
-		dbstore.NewUserStoreParams{
-			DB:           db,
-			PasswordHash: passwordhash,
-		},
-	)
+	// userStore := dbstore.NewUserStore(
+	// 	dbstore.NewUserStoreParams{
+	// 		DB:           db,
+	// 		PasswordHash: passwordhash,
+	// 	},
+	// )
 
 	sessionStore := dbstore.NewSessionStore(
 		dbstore.NewSessionStoreParams{
@@ -74,12 +79,12 @@ func main() {
 
 		r.Get("/crear", handlers.NewGetRegisterHandler().ServeHTTP)
 		r.Post("/crear", handlers.NewPostRegisterHandler(handlers.PostRegisterHandlerParams{
-			UserStore: userStore,
+			// UserStore: userStore,
 		}).ServeHTTP)
 
 		r.Get("/acceder", handlers.NewGetLoginHandler().ServeHTTP)
 		r.Post("/acceder", handlers.NewPostLoginHandler(handlers.PostLoginHandlerParams{
-			UserStore:         userStore,
+			// UserStore:         userStore,
 			SessionStore:      sessionStore,
 			PasswordHash:      passwordhash,
 			SessionCookieName: cfg.SessionCookieName,

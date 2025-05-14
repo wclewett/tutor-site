@@ -14,6 +14,10 @@ type tursoConn struct {
   Token  string
 }
 
+func MustOpen(name string) (*sql.DB, error) {
+  return open(name)
+}
+
 func open(dbName string) (*sql.DB, error) {
   sm, err := aws.GetSMClient("us-east-1")
   if err != nil { return nil, err }
