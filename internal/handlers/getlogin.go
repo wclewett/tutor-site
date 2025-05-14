@@ -3,6 +3,8 @@ package handlers
 import (
 	"goth/internal/templates"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type GetLoginHandler struct{}
@@ -11,12 +13,12 @@ func NewGetLoginHandler() *GetLoginHandler {
 	return &GetLoginHandler{}
 }
 
-func (h *GetLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	c := templates.Login()
-	err := templates.App(c, "Acceder").Render(r.Context(), w)
+func (h *GetLoginHandler) ServeHTTP(c *gin.Context) {
+	t := templates.Login()
+	err := templates.App(t, "Acceder").Render(c.Request.Context(), c.Writer)
 
 	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		http.Error(c.Writer, "Error rendering template", http.StatusInternalServerError)
 		return
 	}
 }

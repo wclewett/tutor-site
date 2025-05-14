@@ -5,32 +5,42 @@ import (
 	"goth/internal/store"
 	"goth/internal/templates"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-type HomeHandler struct{}
-
-func NewHomeHandler() *HomeHandler {
-	return &HomeHandler{}
+type HomeHandler struct{
+  *Handler
 }
 
-func (h *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func NewHomeHandler() *HomeHandler {
+	return &HomeHandler{
+    Handler: &Handler{
+      Method: http.MethodGet,
+      Path: "/",
+      Title: "Español con Fabio",
+    },
+  }
+}
 
-	_, ok := r.Context().Value(middleware.UserKey).(*store.User)
+func (h *HomeHandler) ServeHTTP(c *gin.Context) {
+
+	_, ok := c.Request.Context().Value(middleware.UserKey).(*store.User)
 
 	if !ok {
-		c := templates.Home()
-		err := templates.App(c, "Español con Fabio").Render(r.Context(), w)
+		t := templates.Home()
+		err := templates.App(t, h.Title).Render(c.Request.Context(), c.Writer)
 		if err != nil {
-			http.Error(w, "Error rendering template", http.StatusInternalServerError)
+			http.Error(c.Writer, "Error rendering template", http.StatusInternalServerError)
 			return
 		}
 		return
 	}
 
-	c := templates.Home()
-	err := templates.App(c, "Español con Fabio").Render(r.Context(), w)
+	t := templates.Home()
+	err := templates.App(t, h.Title).Render(c.Request.Context(), c.Writer)
 	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		http.Error(c.Writer, "Error rendering template", http.StatusInternalServerError)
 		return
 	}
 }

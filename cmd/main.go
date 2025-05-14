@@ -5,9 +5,7 @@ import (
 	"errors"
 	"goth/internal/config"
 	"goth/internal/handlers"
-	"goth/internal/hash/passwordhash"
 	database "goth/internal/store/db"
-	"goth/internal/store/dbstore"
 	"log/slog"
 	"net/http"
 	"os"
@@ -15,10 +13,6 @@ import (
 	"syscall"
 	"time"
 
-	m "goth/internal/middleware"
-
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 )
 
 /*
@@ -33,7 +27,6 @@ func init() {
 
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	r := chi.NewRouter()
 
 	cfg := config.MustLoadConfig()
 
@@ -43,76 +36,27 @@ func main() {
       "Error", err)
     // return 
   }
-	passwordhash := passwordhash.NewHPasswordHash()
 
-	// userStore := dbstore.NewUserStore(
-	// 	dbstore.NewUserStoreParams{
-	// 		DB:           db,
-	// 		PasswordHash: passwordhash,
-	// 	},
-	// )
+  router, err := handlers.Router(cfg, db)
+  if err != nil {
+    logger.Error("failed to start router rutrow",
+      "Error", err)
+    // return 
+  }
 
-	sessionStore := dbstore.NewSessionStore(
-		dbstore.NewSessionStoreParams{
-			DB: db,
-		},
-	)
+  start(cfg, router, logger)
 
-	fileServer := http.FileServer(http.Dir("./static"))
-	r.Handle("/static/*", http.StripPrefix("/static/", fileServer))
+	logger.Info("Server shutdown complete")
+}
 
-	authMiddleware := m.NewAuthMiddleware(sessionStore, cfg.SessionCookieName)
-
-	r.Group(func(r chi.Router) {
-		r.Use(
-			middleware.Logger,
-			m.TextHTMLMiddleware,
-			m.CSPMiddleware,
-			authMiddleware.AddUserToContext,
-		)
-
-		r.NotFound(handlers.NewNotFoundHandler().ServeHTTP)
-
-		r.Get("/", handlers.NewHomeHandler().ServeHTTP)
-
-		// r.Get("/about", handlers.NewAboutHandler().ServeHTTP)
-
-		r.Get("/crear", handlers.NewGetRegisterHandler().ServeHTTP)
-		r.Post("/crear", handlers.NewPostRegisterHandler(handlers.PostRegisterHandlerParams{
-			// UserStore: userStore,
-		}).ServeHTTP)
-
-		r.Get("/acceder", handlers.NewGetLoginHandler().ServeHTTP)
-		r.Post("/acceder", handlers.NewPostLoginHandler(handlers.PostLoginHandlerParams{
-			// UserStore:         userStore,
-			SessionStore:      sessionStore,
-			PasswordHash:      passwordhash,
-			SessionCookieName: cfg.SessionCookieName,
-		}).ServeHTTP)
-
-    // r.Get("/reservar", handlers.NewGetReserveHandler().ServeHTTP)
-		// r.Post("/reservar", handlers.NewPostReserveHandler(handlers.PostReserveHandlerParams{
-		// 	UserStore:         userStore,
-		// 	SessionStore:      sessionStore,
-		// 	PasswordHash:      passwordhash,
-		// 	SessionCookieName: cfg.SessionCookieName,
-		// }).ServeHTTP)
-
-    r.Get("/iniciodeusario", handlers.NewGetUserHomeHandler().ServeHTTP)
-
-
-		r.Post("/salir", handlers.NewPostLogoutHandler(handlers.PostLogoutHandlerParams{
-			SessionCookieName: cfg.SessionCookieName,
-		}).ServeHTTP)
-	})
-
+func start(cfg *config.Config, router http.Handler, logger *slog.Logger) {
 	killSig := make(chan os.Signal, 1)
 
 	signal.Notify(killSig, os.Interrupt, syscall.SIGTERM)
 
 	srv := &http.Server{
 		Addr:    cfg.Port,
-		Handler: r,
+		Handler: router,
 	}
 
 	go func() {
@@ -140,6 +84,4 @@ func main() {
 		logger.Error("Server shutdown failed", slog.Any("err", err))
 		os.Exit(1)
 	}
-
-	logger.Info("Server shutdown complete")
 }
