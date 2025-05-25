@@ -3,6 +3,8 @@ package handlers
 import (
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type PostLogoutHandler struct {
@@ -19,14 +21,14 @@ func NewPostLogoutHandler(params PostLogoutHandlerParams) *PostLogoutHandler {
 	}
 }
 
-func (h *PostLogoutHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *PostLogoutHandler) ServeHTTP(c *gin.Context) {
 
-	http.SetCookie(w, &http.Cookie{
+	http.SetCookie(c.Writer, &http.Cookie{
 		Name:    h.sessionCookieName,
 		MaxAge:  -1,
 		Expires: time.Now().Add(-100 * time.Hour),
 		Path:    "/",
 	})
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(c.Writer, c.Request, "/", http.StatusSeeOther)
 }

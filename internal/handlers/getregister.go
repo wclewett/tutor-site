@@ -3,6 +3,8 @@ package handlers
 import (
 	"goth/internal/templates"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type GetRegisterHandler struct{}
@@ -11,12 +13,12 @@ func NewGetRegisterHandler() *GetRegisterHandler {
 	return &GetRegisterHandler{}
 }
 
-func (h *GetRegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	c := templates.Register()
-	err := templates.App(c, "Crear").Render(r.Context(), w)
+func (h *GetRegisterHandler) ServeHTTP(c *gin.Context) {
+	t := templates.Register()
+	err := templates.App(t, "Crear").Render(c.Request.Context(), c.Writer)
 
 	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		http.Error(c.Writer, "Error rendering template", http.StatusInternalServerError)
 		return
 	}
 }

@@ -12,7 +12,6 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
 )
 
 /*
@@ -30,26 +29,21 @@ func main() {
 
 	cfg := config.MustLoadConfig()
 
-	db, err := database.MustOpen(cfg.DatabaseName)
+  db, err := database.MustOpen(cfg.DatabaseName)
   if err != nil {
     logger.Error("failed to start rutrow",
       "Error", err)
-    // return 
+    // os.Exit(1)
+    // return
   }
 
   router, err := handlers.Router(cfg, db)
   if err != nil {
     logger.Error("failed to start router rutrow",
       "Error", err)
-    // return 
+    return 
   }
 
-  start(cfg, router, logger)
-
-	logger.Info("Server shutdown complete")
-}
-
-func start(cfg *config.Config, router http.Handler, logger *slog.Logger) {
 	killSig := make(chan os.Signal, 1)
 
 	signal.Notify(killSig, os.Interrupt, syscall.SIGTERM)

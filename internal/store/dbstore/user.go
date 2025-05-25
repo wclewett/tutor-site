@@ -1,19 +1,19 @@
 package dbstore
 
 import (
+	"database/sql"
 	"goth/internal/hash"
 	"goth/internal/store"
 
-	"gorm.io/gorm"
 )
 
 type UserStore struct {
-	db           *gorm.DB
+	db           *sql.DB
 	passwordhash hash.PasswordHash
 }
 
 type NewUserStoreParams struct {
-	DB           *gorm.DB
+	DB           *sql.DB
 	PasswordHash hash.PasswordHash
 }
 
@@ -26,24 +26,14 @@ func NewUserStore(params NewUserStoreParams) *UserStore {
 
 func (s *UserStore) CreateUser(email string, password string) error {
 
-	hashedPassword, err := s.passwordhash.GenerateFromPassword(password)
-	if err != nil {
-		return err
-	}
+	// hashedPassword, err := s.passwordhash.GenerateFromPassword(password)
+	// if err != nil {
+	// 	return err
+	// }
 
-	return s.db.Create(&store.User{
-		Email:    email,
-		Password: hashedPassword,
-	}).Error
+	return nil
 }
 
 func (s *UserStore) GetUser(email string) (*store.User, error) {
-
-	var user store.User
-	err := s.db.Where("email = ?", email).First(&user).Error
-
-	if err != nil {
-		return nil, err
-	}
-	return &user, err
+	return &store.User{}, nil 
 }

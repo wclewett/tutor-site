@@ -8,6 +8,8 @@ import (
 	"goth/internal/templates"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type PostLoginHandler struct {
@@ -33,26 +35,26 @@ func NewPostLoginHandler(params PostLoginHandlerParams) *PostLoginHandler {
 	}
 }
 
-func (h *PostLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *PostLoginHandler) ServeHTTP(c *gin.Context) {
 
-	email := r.FormValue("email")
-	password := r.FormValue("password")
+	email := c.Request.FormValue("email")
+	password := c.Request.FormValue("password")
 
 	user, err := h.userStore.GetUser(email)
 
 	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
-		c := templates.LoginError()
-		c.Render(r.Context(), w)
+		c.Writer.WriteHeader(http.StatusUnauthorized)
+		t := templates.LoginError()
+		t.Render(c.Request.Context(), c.Writer)
 		return
 	}
 
 	passwordIsValid, err := h.passwordhash.ComparePasswordAndHash(password, user.Password)
 
 	if err != nil || !passwordIsValid {
-		w.WriteHeader(http.StatusUnauthorized)
-		c := templates.LoginError()
-		c.Render(r.Context(), w)
+	  c.Writer.WriteHeader(http.StatusUnauthorized)
+		t := templates.LoginError()
+		t.Render(c.Request.Context(), c.Writer)
 		return
 	}
 
@@ -61,7 +63,7 @@ func (h *PostLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		c.Writer.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -79,8 +81,8 @@ func (h *PostLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
 	}
-	http.SetCookie(w, &cookie)
+	http.SetCookie(c.Writer, &cookie)
 
-	w.Header().Set("HX-Redirect", "/")
-	w.WriteHeader(http.StatusOK)
+	c.Writer.Header().Set("HX-Redirect", "/")
+	c.Writer.WriteHeader(http.StatusOK)
 }

@@ -4,6 +4,8 @@ import (
 	"goth/internal/store"
 	"goth/internal/templates"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type PostRegisterHandler struct {
@@ -20,25 +22,25 @@ func NewPostRegisterHandler(params PostRegisterHandlerParams) *PostRegisterHandl
 	}
 }
 
-func (h *PostRegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	email := r.FormValue("email")
-	password := r.FormValue("password")
+func (h *PostRegisterHandler) ServeHTTP(c *gin.Context) {
+	email := c.Request.FormValue("email")
+	password := c.Request.FormValue("password")
 
 	err := h.userStore.CreateUser(email, password)
 
 	if err != nil {
 
-		w.WriteHeader(http.StatusBadRequest)
-		c := templates.RegisterError()
-		c.Render(r.Context(), w)
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		t := templates.RegisterError()
+		t.Render(c.Request.Context(), c.Writer)
 		return
 	}
 
-	c := templates.RegisterSuccess()
-	err = c.Render(r.Context(), w)
+	t := templates.RegisterSuccess()
+	err = t.Render(c.Request.Context(), c.Writer)
 
 	if err != nil {
-		http.Error(w, "error rendering template", http.StatusInternalServerError)
+		http.Error(c.Writer, "error rendering template", http.StatusInternalServerError)
 		return
 	}
 

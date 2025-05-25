@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"goth/internal/config"
+	"goth/internal/gintemplrenderer"
 	"goth/internal/hash/passwordhash"
 	m "goth/internal/middleware"
 	"goth/internal/store/dbstore"
@@ -19,12 +20,17 @@ const (
 
 func Router(cfg *config.Config, db *sql.DB) (http.Handler, error) {
   r := gin.Default()
-  
-  root, err := os.Getwd()
-	if err != nil {
-    return r, err
-  }
-	
+
+
+ 	ginHtmlRenderer := r.HTMLRender
+	r.HTMLRender = &gintemplrenderer.HTMLTemplRenderer{
+    FallbackHtmlRenderer: ginHtmlRenderer,
+  } 
+
+  r.SetTrustedProxies(nil)
+
+  addStaticRoutes(r)
+
   passwordhash := passwordhash.NewHPasswordHash()
 
 	userStore := dbstore.NewUserStore(
@@ -40,18 +46,13 @@ func Router(cfg *config.Config, db *sql.DB) (http.Handler, error) {
 		},
 	)
 
-  fileServer := http.FileServer(http.Dir(root+fs_path))
-
-  // todo: fix file handler
-	r.Handle("/static/*", http.StripPrefix("/static/", fileServer))
-
 	authMiddleware := m.NewAuthMiddleware(sessionStore, cfg.SessionCookieName)
 
-  // r.Use(
-  // 	m.TextHTMLMiddleware,
-  // 	m.CSPMiddleware,
-  // 	authMiddleware.AddUserToContext,
-  // )
+  r.Use(
+  	m.TextHTMLMiddleware(),
+  	m.CSPMiddleware(),
+  	authMiddleware.AddUserToContext(),
+  )
 
   r.NoRoute(NewNotFoundHandler().ServeHTTP)
 
@@ -90,4 +91,20 @@ func Router(cfg *config.Config, db *sql.DB) (http.Handler, error) {
 
 func addRoutes(r *gin.Engine) {
   // add all routes in switch
+}
+
+func addStaticRoutes(r *gin.Engine) error {
+
+  root, err := os.Getwd()
+	if err != nil {
+    return err
+  }
+
+	// r.Static("/static/*", root)
+	r.Static("/static/css", root)
+	r.Static("/static/fonts", root)
+	r.Static("/static/images", root)
+	r.Static("/static/script", root)
+	//
+  return nil
 }
