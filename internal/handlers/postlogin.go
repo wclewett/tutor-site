@@ -39,8 +39,8 @@ func (h *PostLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	user, err := h.userStore.GetUser(email)
-
 	if err != nil {
+    fmt.Println(err)
 		w.WriteHeader(http.StatusUnauthorized)
 		c := templates.LoginError()
 		c.Render(r.Context(), w)
@@ -48,7 +48,6 @@ func (h *PostLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	passwordIsValid, err := h.passwordhash.ComparePasswordAndHash(password, user.Password)
-
 	if err != nil || !passwordIsValid {
 		w.WriteHeader(http.StatusUnauthorized)
 		c := templates.LoginError()

@@ -27,7 +27,6 @@ func (h *PostRegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	err := h.userStore.CreateUser(email, password)
 
 	if err != nil {
-
 		w.WriteHeader(http.StatusBadRequest)
 		c := templates.RegisterError()
 		c.Render(r.Context(), w)

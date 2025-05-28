@@ -4,7 +4,7 @@ templ Register() {
   @section("row-start-1 order-1") {
     @vsubsection("Crear una cuenta", "bg-stone-100") {
       <div hx-ext="response-targets">
-        <form hx-post="/register" hx-trigger="submit" hx-target-401="#register-error">
+        <form hx-post="/acceder" hx-trigger="submit" hx-target-401="#register-error">
           @textbox("Correo electrónico") {
             <div id="register-error"></div>
             <div>

@@ -38,6 +38,7 @@ func main() {
 	cfg := config.MustLoadConfig()
 
 	db := database.MustOpen(cfg.DatabaseName)
+
 	passwordhash := passwordhash.NewHPasswordHash()
 
 	userStore := dbstore.NewUserStore(
@@ -94,7 +95,6 @@ func main() {
 		// }).ServeHTTP)
 
     r.Get("/iniciodeusario", handlers.NewGetUserHomeHandler().ServeHTTP)
-
 
 		r.Post("/salir", handlers.NewPostLogoutHandler(handlers.PostLogoutHandlerParams{
 			SessionCookieName: cfg.SessionCookieName,
