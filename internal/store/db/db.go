@@ -7,6 +7,7 @@ import (
 	"goth/internal/aws"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
+	"gorm.io/gorm"
 )
 
 type tursoConn struct {
@@ -28,4 +29,8 @@ func open(dbName string) (*sql.DB, error) {
   url := fmt.Sprintf("libsql://%s.turso.io?authToken=%s", dbName, conn.Token)
   db, err := sql.Open("libsql", url)
   return db, err
+}
+
+func MustOpen(dbName string) *gorm.DB {
+  return &gorm.DB{}
 }

@@ -4,7 +4,7 @@ templ Login() {
   @section("row-start-1 order-1") {
     @vsubsection("Acceder a la cuenta", "bg-stone-100") {
       <div hx-ext="response-targets">
-        <form hx-post="/login" hx-trigger="submit" hx-target-401="#login-error">
+        <form hx-post="/acceder" hx-trigger="submit" hx-target-401="#login-error">
           @textbox("Correo electrónico") {
             <div id="login-error"></div>
             <div>

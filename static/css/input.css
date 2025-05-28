@@ -27,5 +27,13 @@
   @font-face {
     font-family: 'Merienda';
     src: url(/static/fonts/merienda.ttf) format('ttf');
+  },
+  @font-face {
+    font-family: 'Lato';
+    src: url(/static/fonts/lato.ttf) format('ttf');
+  },
+  @font-face {
+    font-family: 'Lusitana';
+    src: url(/static/fonts/lusitana.ttf) format('ttf');
   }
 }

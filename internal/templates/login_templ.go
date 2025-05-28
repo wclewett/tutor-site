@@ -50,7 +50,7 @@ func Login() templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-ext=\"response-targets\"><form hx-post=\"/login\" hx-trigger=\"submit\" hx-target-401=\"#login-error\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-ext=\"response-targets\"><form hx-post=\"/acceder\" hx-trigger=\"submit\" hx-target-401=\"#login-error\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

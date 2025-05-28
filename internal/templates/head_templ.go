@@ -124,7 +124,7 @@ func head(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">\n      body { \n        background-image: url('static/images/almeria.png');\n      }\n    </style></head>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">\n      body { \n        background-image: url('static/images/almeria.png');\n      }\n    </style><link rel=\"icon\" href=\"static/images/icon.png\" type=\"image/x-icon\"></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
